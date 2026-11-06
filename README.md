@@ -2,6 +2,16 @@
 
 A utility-aware smart refrigeration controller that simulates IoT sensor data, runs a tariff-optimised state machine, and visualises results on a live dashboard.
 
+## Web dashboard
+
+The Netlify-compatible website is in `public/`, with `netlify.toml` configuring static publishing. It runs a browser simulation without a Python server or build step. Open the site through a static HTTP server; JavaScript modules require HTTP rather than opening the HTML file directly.
+
+The dashboard provides temperature charts, all four controller states, peak/off-peak tariff tracking, a conventional thermostat cost comparison, and CSV export. Pause or reset the simulation, change its speed, adjust ambient temperature, open the simulated door, or disable tariff-aware cooling to explore the behavior.
+
+The initial view simulates the first twelve hours of a day. All readings and settings belong to the current browser session and reset on reload; there is no hardware connection or saved telemetry. The chart and export retain up to 1,440 recent readings, while cost and energy totals cover the entire run. Values are illustrative estimates, not measured savings or food-safety guarantees.
+
+The browser model advances one simulated minute per step with a heat-leak coefficient of 0.0015/minute and cooling of 0.28°C/minute, distinct from the original Python demonstration. It uses the same tariff windows, 150 W compressor rating, and controller targets. A latched safety override starts at 8°C and continues cooling to 5°C before releasing. Both smart and conventional models receive the same ambient temperature and door events.
+
 ## Problem
 Household refrigerators run compressors regardless of electricity tariff windows, wasting money during expensive peak hours.
 
